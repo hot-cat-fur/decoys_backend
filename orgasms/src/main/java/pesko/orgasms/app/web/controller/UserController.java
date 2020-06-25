@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
-@CrossOrigin(origins = {"https://decoys.herokuapp.com"})
+
 public class UserController {
 
     private final UserService userService;

@@ -11,7 +11,7 @@ import pesko.orgasms.app.domain.models.view.AdminUrlViewModel;
 import java.util.Arrays;
 
 @RestController
-@CrossOrigin(origins = {"https://decoys.herokuapp.com"})
+
 public class AdminController {
 
     @Value("${cloudinary.video.app}")

@@ -14,7 +14,7 @@ import java.net.http.HttpResponse;
 import java.util.Date;
 
 @RestController
-@CrossOrigin(origins = {"https://decoys.herokuapp.com"})
+
 public class JwtController {
 
     private final JwtService jwtService;
