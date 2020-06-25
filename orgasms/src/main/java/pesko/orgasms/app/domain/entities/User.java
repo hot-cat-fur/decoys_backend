@@ -26,8 +26,8 @@ public class User extends BaseEntity implements UserDetails {
 
     @ToString.Exclude
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles",joinColumns = @JoinColumn(name = "user" ,referencedColumnName = "id")
-    ,inverseJoinColumns = @JoinColumn(name = "role",referencedColumnName = "id"))
+    @JoinTable(name = "user_roles",joinColumns = @JoinColumn(name = "user_id" ,referencedColumnName = "id")
+    ,inverseJoinColumns = @JoinColumn(name = "role_id",referencedColumnName = "id"))
     private List<Role> roles;
 
     @ToString.Exclude

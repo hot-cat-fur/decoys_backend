@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 public class Jwt extends BaseEntity{
 
-    @Column(unique = true,nullable = false,columnDefinition = "LONGTEXT")
+    @Column(unique = true,nullable = false)
     private String token;
 
     @Column(name = "created_on")
