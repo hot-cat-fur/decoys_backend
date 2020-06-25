@@ -3,10 +3,7 @@ package pesko.orgasms.app.web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pesko.orgasms.app.domain.models.binding.JwtBindingModel;
 import pesko.orgasms.app.domain.models.service.JwtServiceModel;
 import pesko.orgasms.app.service.JwtService;
@@ -17,6 +14,7 @@ import java.net.http.HttpResponse;
 import java.util.Date;
 
 @RestController
+@CrossOrigin(origins = {"https://decoys.herokuapp.com"})
 public class JwtController {
 
     private final JwtService jwtService;

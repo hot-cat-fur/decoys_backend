@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/orgasm")
+@CrossOrigin(origins = {"https://decoys.herokuapp.com"})
 public class OrgasmController {
 
     private final OrgasmService orgasmService;
