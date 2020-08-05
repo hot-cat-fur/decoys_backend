@@ -23,7 +23,7 @@ import pesko.orgasms.app.exceptions.InvalidUserException;
 import pesko.orgasms.app.repository.UserRepository;
 import pesko.orgasms.app.service.RoleService;
 import pesko.orgasms.app.service.UserService;
-import pesko.orgasms.app.service.UserServiceImpl;
+
 import pesko.orgasms.app.utils.ValidatorUtil;
 import pesko.orgasms.app.utils.ValidatorUtilImpl;
 import pesko.orgasms.serviceUtils.RoleServiceUtil;
@@ -45,126 +45,126 @@ public class UserServiceTest {
 
 
 
-     @MockBean
-     UserRepository userRepository;
-
-
-
-     ModelMapper modelMapper;
-
-
-     @MockBean
-     RoleService roleService;
-     List<RoleServiceModel> roles;
-
-
-     BCryptPasswordEncoder bCryptPasswordEncoder;
-
-
-     ValidatorUtil validator;
-     List<User>users;
-     UserServiceImpl userService;
-
-
-
-     @Before
-    public void init(){
-         validator=new ValidatorUtilImpl();
-       modelMapper=new ModelMapper();
-       bCryptPasswordEncoder=new BCryptPasswordEncoder();
-         roles=new ArrayList<>();
-         users=new ArrayList<>();
-
-
-
-
-         userService=new UserServiceImpl(userRepository,modelMapper,roleService,bCryptPasswordEncoder,validator);
-
-
-
-
-     }
-
-     @Test
-    public void registerUser_whenCorrect_shouldRegister(){
-         users.addAll(UserServiceUtil.getUsers(1));
-         User user=new User();
-         user.setPassword("valid_password");
-         user.setUsername("valid_username");
-         users.add(0,user);
-         users.get(0).setRoles(RoleServiceUtil.getAllRoles());
-
-
-         when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
-         Mockito.when(userRepository.save(any())).thenReturn(users.get(0));
-         Mockito.doNothing().when(roleService).initRoles();
-         when(roleService.getRole(any())).thenReturn(new RoleServiceModel());
-
-      UserServiceModel saveUser= userService.registerUser(modelMapper.map(users.get(0),UserServiceModel.class));
-
-      Assert.assertEquals(saveUser.getRoles().size(),4);
-      Assert.assertEquals(saveUser.getUsername(),"valid_username");
-      Assert.assertEquals(saveUser.getPassword(),"valid_password");
-
-     }
-    @Test(expected = InvalidUserException.class)
-    public void registerUser_whenIncorectPassword_shouldThrowException(){
-        users.addAll(UserServiceUtil.getUsers(1));
-        User user=new User();
-        user.setPassword("inv");
-        user.setUsername("valid_username");
-        users.add(0,user);
-        users.get(0).setRoles(RoleServiceUtil.getAllRoles());
-
-
-        when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
-        Mockito.when(userRepository.save(any())).thenReturn(users.get(0));
-        Mockito.doNothing().when(roleService).initRoles();
-        when(roleService.getRole(any())).thenReturn(new RoleServiceModel());
-
-        UserServiceModel saveUser= userService.registerUser(modelMapper.map(users.get(0),UserServiceModel.class));
-
-
-    }
-    @Test(expected = InvalidUserException.class)
-    public void registerUser_whenIncorectUsername_shouldThrowException(){
-        users.addAll(UserServiceUtil.getUsers(1));
-        User user=new User();
-        user.setPassword("valid_password");
-        user.setUsername("in");
-        users.add(0,user);
-        users.get(0).setRoles(RoleServiceUtil.getAllRoles());
-
-
-        when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
-        Mockito.when(userRepository.save(any())).thenReturn(users.get(0));
-        Mockito.doNothing().when(roleService).initRoles();
-        when(roleService.getRole(any())).thenReturn(new RoleServiceModel());
-
-        UserServiceModel saveUser= userService.registerUser(modelMapper.map(users.get(0),UserServiceModel.class));
-
-
-    }
-
-    @Test(expected = InvalidUserException.class)
-    public void registerUser_userAlreadyIxists_shouldThrowException(){
-        users.addAll(UserServiceUtil.getUsers(1));
-        User user=new User();
-        user.setPassword("valid_password");
-        user.setUsername("in");
-        users.add(0,user);
-        users.get(0).setRoles(RoleServiceUtil.getAllRoles());
-
-
-        when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(users.get(0)));
-        Mockito.when(userRepository.save(any())).thenReturn(users.get(0));
-        Mockito.doNothing().when(roleService).initRoles();
-        when(roleService.getRole(any())).thenReturn(new RoleServiceModel());
-
-        UserServiceModel saveUser= userService.registerUser(modelMapper.map(users.get(0),UserServiceModel.class));
-
-
-    }
+//     @MockBean
+//     UserRepository userRepository;
+//
+//
+//
+//     ModelMapper modelMapper;
+//
+//
+//     @MockBean
+//     RoleService roleService;
+//     List<RoleServiceModel> roles;
+//
+//
+//     BCryptPasswordEncoder bCryptPasswordEncoder;
+//
+//
+//     ValidatorUtil validator;
+//     List<User>users;
+//     UserServiceImpl userService;
+//
+//
+//
+//     @Before
+//    public void init(){
+//         validator=new ValidatorUtilImpl();
+//       modelMapper=new ModelMapper();
+//       bCryptPasswordEncoder=new BCryptPasswordEncoder();
+//         roles=new ArrayList<>();
+//         users=new ArrayList<>();
+//
+//
+//
+//
+//         userService=new UserServiceImpl(userRepository,modelMapper,roleService,bCryptPasswordEncoder,validator);
+//
+//
+//
+//
+//     }
+//
+//     @Test
+//    public void registerUser_whenCorrect_shouldRegister(){
+//         users.addAll(UserServiceUtil.getUsers(1));
+//         User user=new User();
+//         user.setPassword("valid_password");
+//         user.setUsername("valid_username");
+//         users.add(0,user);
+//         users.get(0).setRoles(RoleServiceUtil.getAllRoles());
+//
+//
+//         when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
+//         Mockito.when(userRepository.save(any())).thenReturn(users.get(0));
+//         Mockito.doNothing().when(roleService).initRoles();
+//         when(roleService.getRole(any())).thenReturn(new RoleServiceModel());
+//
+//      UserServiceModel saveUser= userService.registerUser(modelMapper.map(users.get(0),UserServiceModel.class));
+//
+//      Assert.assertEquals(saveUser.getRoles().size(),4);
+//      Assert.assertEquals(saveUser.getUsername(),"valid_username");
+//      Assert.assertEquals(saveUser.getPassword(),"valid_password");
+//
+//     }
+//    @Test(expected = InvalidUserException.class)
+//    public void registerUser_whenIncorectPassword_shouldThrowException(){
+//        users.addAll(UserServiceUtil.getUsers(1));
+//        User user=new User();
+//        user.setPassword("inv");
+//        user.setUsername("valid_username");
+//        users.add(0,user);
+//        users.get(0).setRoles(RoleServiceUtil.getAllRoles());
+//
+//
+//        when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
+//        Mockito.when(userRepository.save(any())).thenReturn(users.get(0));
+//        Mockito.doNothing().when(roleService).initRoles();
+//        when(roleService.getRole(any())).thenReturn(new RoleServiceModel());
+//
+//        UserServiceModel saveUser= userService.registerUser(modelMapper.map(users.get(0),UserServiceModel.class));
+//
+//
+//    }
+//    @Test(expected = InvalidUserException.class)
+//    public void registerUser_whenIncorectUsername_shouldThrowException(){
+//        users.addAll(UserServiceUtil.getUsers(1));
+//        User user=new User();
+//        user.setPassword("valid_password");
+//        user.setUsername("in");
+//        users.add(0,user);
+//        users.get(0).setRoles(RoleServiceUtil.getAllRoles());
+//
+//
+//        when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
+//        Mockito.when(userRepository.save(any())).thenReturn(users.get(0));
+//        Mockito.doNothing().when(roleService).initRoles();
+//        when(roleService.getRole(any())).thenReturn(new RoleServiceModel());
+//
+//        UserServiceModel saveUser= userService.registerUser(modelMapper.map(users.get(0),UserServiceModel.class));
+//
+//
+//    }
+//
+//    @Test(expected = InvalidUserException.class)
+//    public void registerUser_userAlreadyIxists_shouldThrowException(){
+//        users.addAll(UserServiceUtil.getUsers(1));
+//        User user=new User();
+//        user.setPassword("valid_password");
+//        user.setUsername("in");
+//        users.add(0,user);
+//        users.get(0).setRoles(RoleServiceUtil.getAllRoles());
+//
+//
+//        when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(users.get(0)));
+//        Mockito.when(userRepository.save(any())).thenReturn(users.get(0));
+//        Mockito.doNothing().when(roleService).initRoles();
+//        when(roleService.getRole(any())).thenReturn(new RoleServiceModel());
+//
+//        UserServiceModel saveUser= userService.registerUser(modelMapper.map(users.get(0),UserServiceModel.class));
+//
+//
+//    }
 //      @Test
 //    public void setRole_shouldSetAllRoles_whenDbEmpty(){
 //

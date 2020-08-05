@@ -3,6 +3,7 @@ package pesko.orgasms.app.domain.entities;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -20,9 +21,17 @@ import java.util.Set;
 public class User extends BaseEntity implements UserDetails {
 
     @Column(unique = true,nullable = false)
+    @Length(min = 6)
     private String username;
     @Column(nullable = false)
+    @Length(min = 6)
     private String password;
+
+    @Column(name = "bitcoin_address")
+    private String bitcoinAddress;
+
+    @Column(name = "patreon_link")
+    private String patreonLink;
 
     @ToString.Exclude
     @ManyToMany(fetch = FetchType.EAGER)
@@ -31,9 +40,7 @@ public class User extends BaseEntity implements UserDetails {
     private List<Role> roles;
 
     @ToString.Exclude
-    @ManyToMany
-    @JoinTable(name = "users_orgasms",joinColumns = @JoinColumn(name = "user_id",referencedColumnName = "id"),
-            inverseJoinColumns =@JoinColumn(name = "orgasm_id" ,referencedColumnName = "id") )
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
     private List<Orgasm> orgasms;
 
     public User(){

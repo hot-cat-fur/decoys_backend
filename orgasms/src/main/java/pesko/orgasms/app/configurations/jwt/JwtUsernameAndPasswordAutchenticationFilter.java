@@ -1,6 +1,7 @@
 package pesko.orgasms.app.configurations.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.net.HttpHeaders;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ public class JwtUsernameAndPasswordAutchenticationFilter extends UsernamePasswor
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
 
+
         Authentication authentication=null;
 
         try {
@@ -73,13 +75,9 @@ public class JwtUsernameAndPasswordAutchenticationFilter extends UsernamePasswor
                 .compact(); //Create (Build)
 
 
-
-
         response.addHeader(jwtConfiguration.getAuthorizationHeader(),jwtConfiguration.getTokenPrefix() + token);
-        response.setStatus(200);
+
 
         this.jwtService.saveToken(token);
-
-
     }
 }

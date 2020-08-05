@@ -18,7 +18,7 @@ import pesko.orgasms.app.configurations.jwt.JwtConfiguration;
 import pesko.orgasms.app.configurations.jwt.JwtTokenVerifier;
 import pesko.orgasms.app.configurations.jwt.JwtUsernameAndPasswordAutchenticationFilter;
 import pesko.orgasms.app.service.JwtService;
-import pesko.orgasms.app.service.UserServiceImpl;
+import pesko.orgasms.app.service.impl.UserServiceImpl;
 
 import java.util.Arrays;
 
@@ -54,7 +54,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .addFilter(new JwtUsernameAndPasswordAutchenticationFilter(authenticationManager(), jwtConfiguration,jwtService))
                 .addFilterAfter(new JwtTokenVerifier(jwtConfiguration,jwtService),JwtUsernameAndPasswordAutchenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/register/**","/charge/**","/login","/orgasm/**").permitAll()
+                .antMatchers("/register/**","/charge/**","/login","/orgasm/**","/mail/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/profile","/logoff").hasRole("USER")
                 .anyRequest()
@@ -80,8 +80,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://decoys.herokuapp.com","http://localhost:3000"));//https://decoys.herokuapp.com
-        configuration.setAllowedMethods(Arrays.asList("GET","POST","OPTIONS"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000","https://decoys.herokuapp.com"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
         configuration.setExposedHeaders(Arrays.asList("Authorization"));
         configuration.addAllowedHeader("Authorization");
         configuration.addAllowedHeader("Content-Type");

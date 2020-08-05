@@ -1,4 +1,4 @@
-package pesko.orgasms.app.domain.models.view;
+package pesko.orgasms.app.domain.models.response;
 
 public class AdminUrlViewModel {
 

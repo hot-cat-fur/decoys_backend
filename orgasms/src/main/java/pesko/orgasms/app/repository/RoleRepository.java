@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import pesko.orgasms.app.domain.entities.Role;
 
 @Repository
-public interface RoleRepository  extends JpaRepository<Role,Integer> {
+public interface RoleRepository  extends JpaRepository<Role,Long> {
 
     Role findByAuthority(String authority);
 }

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Getter
@@ -13,18 +14,13 @@ public class OrgasmBindingModel {
 
 
     @Length(min = 1)
+    @NotBlank
     private String title;
 
-    private String content;
-
 
     @Length(min = 1)
-    private String imgUrl;
-
-
-    @Length(min = 1)
+    @NotBlank
     private String videoUrl;
-
 
 
 }

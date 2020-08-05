@@ -21,7 +21,7 @@ public class JwtScheduleComponent {
         this.service = service;
     }
 
-    @Scheduled(fixedRate = 5*60*1000)
+    @Scheduled(fixedRate = 60*60*1000)
     public void jwtPatrol(){
 
         List<JwtServiceModel>jwts= this.service.findAll();

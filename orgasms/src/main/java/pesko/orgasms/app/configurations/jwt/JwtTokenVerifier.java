@@ -52,6 +52,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
 
 
         if (authorizationHeader == null || authorizationHeader.isEmpty() || !authorizationHeader.startsWith(jwtConfiguration.getTokenPrefix())) {
+
             filterChain.doFilter(httpServletRequest, httpServletResponse);
             return;
         }
