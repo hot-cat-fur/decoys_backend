@@ -81,7 +81,7 @@ public class AdminController {
             throw new UsernameNotFoundException("User doesn't exist");
         }
         UserInfoResponseModel responseModel = this.modelMapper.map(user, UserInfoResponseModel.class);
-        responseModel.setAuthorities(user.getRoles().stream().map(RoleServiceModel::getAuthority).collect(Collectors.toList()));
+        responseModel.setRoles(user.getRoles().stream().map(RoleServiceModel::getAuthority).collect(Collectors.toList()));
 
 
         return ResponseEntity.ok().body(responseModel);
@@ -113,7 +113,7 @@ public class AdminController {
         UserInfoResponseModel userInfoResponseModel=this.modelMapper.map(userServiceModel,UserInfoResponseModel.class);
 
         userServiceModel.getRoles().forEach(e->{
-            userInfoResponseModel.getAuthorities().add(e.getAuthority());
+            userInfoResponseModel.getRoles().add(e.getAuthority());
         });
 
         return ResponseEntity.ok().body(userInfoResponseModel);
