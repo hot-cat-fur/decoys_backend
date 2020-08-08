@@ -12,7 +12,7 @@ public class UserInfoResponseModel {
 
     private String username;
     private Long id;
-    private List<String> authorities;
+    private List<String> roles;
     private List<OrgasmResponseModel> orgasms;
 
     private String bitcoinAddress;
@@ -20,6 +20,6 @@ public class UserInfoResponseModel {
 
     public UserInfoResponseModel(){
 
-        this.setAuthorities(new ArrayList<>());
+        this.setRoles(new ArrayList<>());
     }
 }
