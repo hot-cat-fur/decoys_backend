@@ -19,6 +19,8 @@ public interface OrgasmRepository extends JpaRepository<Orgasm, Long> {
 
     Optional<Orgasm> findByTitle(String title);
 
+    List<Orgasm> findAllByPendingIsTrue();
+
     @Query(value = "SELECT  * FROM orgasm o join  orgasm_like_dislike old on o.id = old.orgasm_id" +
             " where old.like_dislike = FALSE AND old.like_dislike_key = ?1 AND  o.pending = FALSE "
             , nativeQuery = true)

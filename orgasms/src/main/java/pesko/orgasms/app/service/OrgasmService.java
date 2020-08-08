@@ -14,7 +14,7 @@ public interface OrgasmService {
 
     OrgasmServiceModel saveOrgasm(MultipartFile file, String orgasmTitle, String username) throws IOException;
     List<OrgasmServiceModel> findAll();
-
+    List<OrgasmServiceModel> findAllPendingOrgasms();
 
 
     void deleteOrgasm(String title);
