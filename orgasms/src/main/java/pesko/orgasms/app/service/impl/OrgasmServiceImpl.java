@@ -70,11 +70,11 @@ public class OrgasmServiceImpl implements OrgasmService {
             throw new OrgasmAlreadyExistException(ORGASM_ALREADY_EXIST);
         }
 
-        uploadToBucket(file,orgasmTitle);
+       String url= uploadToBucket(file,orgasmTitle);
         Orgasm orgasm=new Orgasm();
         orgasm.setUser(user);
         orgasm.setTitle(orgasmTitle);
-        orgasm.setVideoUrl(String.format("%s/%s%s",publicUrl,filesPath,orgasmTitle));
+        orgasm.setVideoUrl(url);
 
         if(user.getRoles().size()<3){
             orgasm.setPending(true);
