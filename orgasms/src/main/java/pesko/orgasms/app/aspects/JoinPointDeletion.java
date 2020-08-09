@@ -22,21 +22,21 @@ public class JoinPointDeletion {
     }
 
 
-    @AfterReturning(value = "execution(* pesko.orgasms.app.service.impl.OrgasmServiceImpl.deleteOrgasm(..)) ||" +
-            " execution(* pesko.orgasms.app.service.impl.OrgasmServiceImpl.deleteOwnOrgasm(..)))")
-    public void afterOrgasmIsDeletedFromTheDB(JoinPoint jp){
-
-      String title= (String) jp.getArgs()[0];
-      eventPublisher.publishDeleteEvent(title);
-    }
-
-    @AfterReturning(value = "execution(* pesko.orgasms.app.service.impl.UserServiceImpl.deleteUserByUsername(..)) ",returning = "result")
-    public void afterUserIsDeleted(JoinPoint jp, UserServiceModel result){
-
-        result.getOrgasms().forEach(e->{
-            eventPublisher.publishDeleteEvent(e.getTitle());
-        });
-
-
-    }
+//    @AfterReturning(value = "execution(* pesko.orgasms.app.service.impl.OrgasmServiceImpl.deleteOrgasm(..)) ||" +
+//            " execution(* pesko.orgasms.app.service.impl.OrgasmServiceImpl.deleteOwnOrgasm(..)))")
+//    public void afterOrgasmIsDeletedFromTheDB(JoinPoint jp){
+//
+//      String title= (String) jp.getArgs()[0];
+//      eventPublisher.publishDeleteEvent(title);
+//    }
+//
+//    @AfterReturning(value = "execution(* pesko.orgasms.app.service.impl.UserServiceImpl.deleteUserByUsername(..)) ",returning = "result")
+//    public void afterUserIsDeleted(JoinPoint jp, UserServiceModel result){
+//
+//        result.getOrgasms().forEach(e->{
+//            eventPublisher.publishDeleteEvent(e.getTitle());
+//        });
+//
+//
+//    }
 }

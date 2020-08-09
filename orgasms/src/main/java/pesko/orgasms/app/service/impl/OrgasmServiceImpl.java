@@ -1,8 +1,8 @@
 package pesko.orgasms.app.service.impl;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.util.IOUtils;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,9 +20,10 @@ import pesko.orgasms.app.service.OrgasmService;
 import pesko.orgasms.app.utils.ValidatorUtil;
 
 
-import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
@@ -37,6 +38,7 @@ public class OrgasmServiceImpl implements OrgasmService {
     private final UserRepository userRepository;
     private final Random random;
     private final AmazonS3 s3;
+    private final Cloudinary cloudinary;
 
 
     @Value(value = "${aws.bucket}")
@@ -48,12 +50,13 @@ public class OrgasmServiceImpl implements OrgasmService {
     private String publicUrl;
 
     @Autowired
-    public OrgasmServiceImpl(OrgasmRepository orgasmRepository, ModelMapper modelMapper, ValidatorUtil validatorUtil, UserRepository userRepository, AmazonS3 s3) {
+    public OrgasmServiceImpl(OrgasmRepository orgasmRepository, ModelMapper modelMapper, ValidatorUtil validatorUtil, UserRepository userRepository, AmazonS3 s3, Cloudinary cloudinary) {
         this.orgasmRepository = orgasmRepository;
         this.modelMapper = modelMapper;
         this.validatorUtil = validatorUtil;
         this.userRepository = userRepository;
         this.s3 = s3;
+        this.cloudinary = cloudinary;
         this.random = new Random();
     }
 
@@ -80,14 +83,21 @@ public class OrgasmServiceImpl implements OrgasmService {
         return convertOrgasmToOrgasmServiceModel(this.orgasmRepository.saveAndFlush(orgasm));
     }
 
-    private void uploadToBucket(MultipartFile file,String objectName) throws IOException {
+    private String uploadToBucket(MultipartFile file,String objectName) throws IOException {
 
-        ObjectMetadata metadata= new ObjectMetadata();
-        byte[] bytes= IOUtils.toByteArray(file.getInputStream());
+        File video = File.createTempFile("pre_fix",file.getOriginalFilename());
+        file.transferTo(video);
+        Map map= cloudinary.uploader().upload(video, ObjectUtils.asMap("resource_type","video"));
 
-        metadata.setContentLength(bytes.length);
-        ByteArrayInputStream byteArrayInputStream= new ByteArrayInputStream(bytes);
-       s3.putObject(bucketName,String.format("%s%s",filesPath,objectName),byteArrayInputStream,metadata);
+        video.delete();
+        return (String) map.get("url");
+
+//       ObjectMetadata metadata= new ObjectMetadata();
+//        byte[] bytes= IOUtils.toByteArray(file.getInputStream());
+//
+//        metadata.setContentLength(bytes.length);
+//        ByteArrayInputStream byteArrayInputStream= new ByteArrayInputStream(bytes);
+//       s3.putObject(bucketName,String.format("%s%s",filesPath,objectName),byteArrayInputStream,metadata);
 
     }
 

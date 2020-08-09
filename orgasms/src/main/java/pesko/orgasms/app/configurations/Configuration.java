@@ -1,6 +1,8 @@
 package pesko.orgasms.app.configurations;
 
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
@@ -59,6 +61,18 @@ public class Configuration {
 
 
         return mailSender;
+    }
+
+    @Bean
+    public Cloudinary cloudinary(){
+        String cloudName="twisteddd";
+        String apiKey="585138921326611";
+        String apiSecret="gaPDPbdjq5FqdgIrcixVS45Mn5g";
+        return  new Cloudinary(ObjectUtils.asMap(
+                "cloud_name",cloudName,
+                "api_key",apiKey,
+                "api_secret",apiSecret
+        ));
     }
 
 }
