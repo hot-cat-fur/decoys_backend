@@ -23,15 +23,13 @@ public class JwtScheduleComponent {
 
     @Scheduled(fixedRate = 60*60*1000)
     public void jwtPatrol(){
-
-        List<JwtServiceModel>jwts= this.service.findAll();
-
-        for(int i=0;i<jwts.size();i++){
-            if(jwts.get(i).getExpiresOn().before(Date.valueOf(LocalDate.now()))){
-                service.deleteToken(jwts.get(i).getToken());
-            }
-        }
+//
+//        List<JwtServiceModel>jwts= this.service.findAll();
+//
+//        for(int i=0;i<jwts.size();i++){
+//            if(jwts.get(i).getExpiresOn().before(Date.valueOf(LocalDate.now()))){
+//                service.deleteToken(jwts.get(i).getToken());
+//            }
+//        }
     }
-
-
 }
